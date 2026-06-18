@@ -22,7 +22,7 @@ def remove_acentos(texto):
 def transform_customers(con_db_leitura, con_db_escrita):
     df = pd.read_sql("SELECT * FROM customers", con_db_leitura)
     df['customer_city'] = df['customer_city'].str.title().str.strip()
-    df['customer_state'] = df['customer_state'].str.title().str.strip()
+    df['customer_state'] = df['customer_state'].str.upper().str.strip()
     df['customer_zip_code_prefix'] = df['customer_zip_code_prefix'].astype(str).str.zfill(5)
     df.to_sql('customers', con_db_escrita, if_exists='replace', index=False)
     logger.info(f"Limpeza de customers realizada!")
