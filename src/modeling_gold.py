@@ -47,6 +47,7 @@ def transform_fact_orders(con_db_leitura, con_db_escrita):
         WHEN o.order_delivered_customer_date > o.order_estimated_delivery_date THEN TRUE 
         ELSE FALSE 
     END as late,
+    o.order_status,
     uoi.sum_freight,
     AVG(ow.review_score) as avg_review_score, 
     c.customer_state,
@@ -64,6 +65,7 @@ def transform_fact_orders(con_db_leitura, con_db_escrita):
     ON s.seller_id = mds.max_sid
     GROUP BY 
     o.order_id, 
+    o.order_status,
     uoi.sum_freight, 
     c.customer_state,
     s.seller_state''', con_db_leitura)
